@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бомбер черный - Arendom</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ru.js"></script>
+</head>
+<body>
+    <!-- Копируем модальное окно из index.html -->
+    <div class="modal" id="loginModal">
+        <!-- Форма входа -->
+        <div class="modal-content" id="loginForm">
+            <button class="modal-close" id="closeModal">×</button>
+            <h2 class="modal-title">Вход</h2>
+            <p class="modal-subtitle">Войти в свой аккаунт</p>
+            <form class="login-form">
+                <div class="form-group">
+                    <input type="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Пароль" required>
+                </div>
+                <button type="submit" class="btn btn-primary login-btn">Войти</button>
+                <div class="form-links">
+                    <a href="#" class="forgot-password">Забыли пароль?</a>
+                    <p class="register-link">Еще нет аккаунта? <a href="#" id="showRegister">Зарегистрироваться</a></p>
+                </div>
+            </form>
+        </div>
+
+        <!-- Форма регистрации -->
+        <div class="modal-content hidden" id="registerForm">
+            <button class="modal-close" id="closeModalRegister">×</button>
+            <h2 class="modal-title">Регистрация</h2>
+            <p class="modal-subtitle">Создать новый аккаунт</p>
+            <form class="login-form">
+                <div class="form-group">
+                    <input type="text" placeholder="Имя" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Пароль" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Повторите пароль" required>
+                </div>
+                <button type="submit" class="btn btn-primary login-btn">Зарегистрироваться</button>
+                <div class="form-links">
+                    <p class="register-link">Уже есть аккаунт? <a href="#" id="showLogin">Войти</a></p>
+                    <div class="social-login">
+                        <button type="button" class="social-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0zm5.568 8.16c-.18 1.896-.96 6.504-1.356 8.628-.168.9-.504 1.2-.816 1.236-.696.06-1.224-.456-1.896-.9-1.056-.696-1.656-1.128-2.676-1.8-1.188-.78-.42-1.212.264-1.908.18-.18 3.252-2.976 3.312-3.228a.24.24 0 00-.06-.216c-.072-.06-.168-.036-.24-.024-.108.024-1.788 1.14-5.064 3.348-.48.324-.912.492-1.296.48-.432-.012-1.248-.24-1.86-.444-.756-.24-1.344-.372-1.296-.792.024-.216.324-.432.888-.66 3.504-1.524 5.832-2.532 6.996-3.012 3.336-1.392 4.02-1.632 4.476-1.632.096 0 .324.024.468.144.12.096.156.228.168.324-.012.072.012.288 0 .456z" fill="currentColor"/>
+                            </svg>
+                        </button>
+                        <button type="button" class="social-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C5.372 0 0 5.372 0 12c0 6.627 5.372 12 12 12s12-5.372 12-12c0-6.627-5.372-12-12-12zm6.39 14.885c.407.396.842.768 1.208 1.207.163.196.317.4.434.633.165.33.016.693-.272.712h-1.786a1.78 1.78 0 01-1.467-.624c-.319-.32-.613-.662-.92-.992-.125-.134-.257-.26-.407-.362-.308-.2-.575-.139-.751.182-.18.326-.22.688-.237 1.052-.024.528-.184.667-.714.691-1.133.063-2.209-.118-3.207-.687-.881-.506-1.563-1.217-2.156-2.024-1.156-1.58-2.04-3.314-2.83-5.096-.178-.401-.048-.617.39-.624.727-.017 1.453-.016 2.18-.001.295.005.49.173.605.45.397.97.885 1.895 1.493 2.745.162.225.327.45.561.607.26.174.458.116.58-.17.077-.182.11-.377.127-.572.057-.665.064-1.332-.035-1.995-.061-.404-.291-.666-.694-.743-.207-.04-.176-.119-.076-.24.174-.214.338-.347.665-.347h2.018c.318.063.389.206.432.525l.002 2.244c-.004.124.062.492.285.575.179.06.297-.085.404-.2.484-.516.829-1.122 1.139-1.752.137-.278.255-.565.37-.852.085-.214.218-.32.458-.317l1.944.003c.057 0 .116.001.172.01.327.056.417.195.316.512-.16.5-.47.917-.774 1.336-.324.446-.67.876-.989 1.327-.29.41-.267.615.094.972z" fill="currentColor"/>
+                            </svg>
+                        </button>
+                        <button type="button" class="social-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="currentColor"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Копируем хедер из index.html -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <button class="menu-btn" id="menuBtn">
+                    <span class="menu-icon"></span>
+                    Меню
+                </button>
+                <div class="nav-right">
+                    <button class="icon-btn search-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button class="icon-btn favorite-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20.84 4.61C20.3292 4.099 19.7228 3.69364 19.0554 3.41708C18.3879 3.14052 17.6725 2.99817 16.95 2.99817C16.2275 2.99817 15.5121 3.14052 14.8446 3.41708C14.1772 3.69364 13.5708 4.099 13.06 4.61L12 5.67L10.94 4.61C9.9083 3.57831 8.50903 2.99871 7.05 2.99871C5.59096 2.99871 4.19169 3.57831 3.16 4.61C2.1283 5.64169 1.54871 7.04097 1.54871 8.5C1.54871 9.95903 2.1283 11.3583 3.16 12.39L4.22 13.45L12 21.23L19.78 13.45L20.84 12.39C21.351 11.8792 21.7563 11.2728 22.0329 10.6054C22.3095 9.93789 22.4518 9.22249 22.4518 8.5C22.4518 7.77751 22.3095 7.06211 22.0329 6.39464C21.7563 5.72717 21.351 5.12075 20.84 4.61Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button class="icon-btn compare-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16 18L22 12L16 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M8 6L2 12L8 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button class="icon-btn cart-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 22C9.55228 22 10 21.5523 10 21C10 20.4477 9.55228 20 9 20C8.44772 20 8 20.4477 8 21C8 21.5523 8.44772 22 9 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M20 22C20.5523 22 21 21.5523 21 21C21 20.4477 20.5523 20 20 20C19.4477 20 19 20.4477 19 21C19 21.5523 19.4477 22 20 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M1 1H5L7.68 14.39C7.77144 14.8504 8.02191 15.264 8.38755 15.5583C8.75318 15.8526 9.2107 16.009 9.68 16H19.4C19.8693 16.009 20.3268 15.8526 20.6925 15.5583C21.0581 15.264 21.3086 14.8504 21.4 14.39L23 6H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button class="icon-btn profile-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+            
+            <!-- Добавляем меню -->
+            <div class="burger-menu" id="burgerMenu">
+                <div class="burger-menu-content">
+                    <ul class="burger-menu-list">
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="catalog.html">Каталог</a></li>
+                        <li><a href="#">О нас</a></li>
+                        <li><a href="#">Контакты</a></li>
+                        <li><a href="#">Как это работает</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Добавляем оверлей -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Основной контент страницы товара -->
+    <main class="product-page">
+        <div class="container">
+            <div class="breadcrumbs">
+                <a href="index.html">Главная</a> / 
+                <a href="catalog.html">Каталог</a> / 
+                <span>Бомбер черный</span>
+            </div>
+
+            <div class="product-details">
+                <div class="product-gallery">
+                    <img src="images/bomber.png" alt="Бомбер черный" class="product-main-image">
+                </div>
+                <div class="product-info-detailed">
+                    <h1>Бомбер черный</h1>
+                    <div class="product-price">2 300 ₽</div>
+                    
+                    <div class="product-meta">
+                        <span>Арт.: 123456</span>
+                        <span>Черный</span>
+                    </div>
+
+                    <!-- Выбор размера -->
+                    <div class="size-selector">
+                        <button class="size-btn">S</button>
+                        <button class="size-btn active">M</button>
+                        <button class="size-btn">L</button>
+                        <button class="size-btn">XL</button>
+                    </div>
+
+                    <!-- Кнопки действий -->
+                    <div class="action-buttons">
+                        <button class="action-btn primary">Арендовать</button>
+                        <button class="action-btn secondary">Написать</button>
+                    </div>
+
+                    <!-- Календарь -->
+                    <div class="rent-calendar">
+                        <h3>Календарь дней аренды</h3>
+                        <input type="text" class="calendar-input" placeholder="Выберите даты">
+                    </div>
+
+                    <!-- Описание -->
+                    <div class="product-description">
+                        <div class="section-header">
+                            <h3>Описание</h3>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="section-content">
+                            <p>Бомбер выполнен из плотной ткани на подкладке для комфорта в прохладную погоду. Застежка на молнию, два боковых кармана, манжеты и воротник на резинке.</p>
+                        </div>
+                    </div>
+
+                    <!-- Характеристики -->
+                    <div class="product-specifications">
+                        <div class="section-header">
+                            <h3>Характерстики</h3>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="section-content">
+                            <div class="specs-grid">
+                                <div class="spec-item">
+                                    <span>Материал:</span>
+                                    <span>Полиэстер</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span>Размер:</span>
+                                    <span>M</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span>Цвет:</span>
+                                    <span>Черный</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span>Сезон:</span>
+                                    <span>Демисезон</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Копируем футер из index.html -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <h3 class="footer-logo">Arendom</h3>
+                    <p class="footer-copyright">© 2024 ООО «Arendom» Все права защищены</p>
+                    <p class="footer-id">(18+)</p>
+                </div>
+                <div class="footer-center">
+                    <a href="tel:+78005553535" class="footer-phone">+7 (800) 555-35-35</a>
+                    <a href="mailto:arendom.mail.ru" class="footer-email">arendom.mail.ru</a>
+                </div>
+                <div class="footer-right">
+                    <div class="footer-links">
+                        <a href="#" class="footer-link">Политика обработки данных</a>
+                        <a href="#" class="footer-link">Политика конфиденциальности</a>
+                        <a href="#" class="footer-link">Мобильная версия</a>
+                    </div>
+                    <div class="footer-social">
+                        <a href="#" class="social-link">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0zm5.568 8.16c-.18 1.896-.96 6.504-1.356 8.628-.168.9-.504 1.2-.816 1.236-.696.06-1.224-.456-1.896-.9-1.056-.696-1.656-1.128-2.676-1.8-1.188-.78-.42-1.212.264-1.908.18-.18 3.252-2.976 3.312-3.228a.24.24 0 00-.06-.216c-.072-.06-.168-.036-.24-.024-.108.024-1.788 1.14-5.064 3.348-.48.324-.912.492-1.296.48-.432-.012-1.248-.24-1.86-.444-.756-.24-1.344-.372-1.296-.792.024-.216.324-.432.888-.66 3.504-1.524 5.832-2.532 6.996-3.012 3.336-1.392 4.02-1.632 4.476-1.632.096 0 .324.024.468.144.12.096.156.228.168.324-.012.072.012.288 0 .456z" fill="currentColor"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C5.372 0 0 5.372 0 12c0 6.627 5.372 12 12 12s12-5.372 12-12c0-6.627-5.372-12-12-12zm6.39 14.885c.407.396.842.768 1.208 1.207.163.196.317.4.434.633.165.33.016.693-.272.712h-1.786a1.78 1.78 0 01-1.467-.624c-.319-.32-.613-.662-.92-.992-.125-.134-.257-.26-.407-.362-.308-.2-.575-.139-.751.182-.18.326-.22.688-.237 1.052-.024.528-.184.667-.714.691-1.133.063-2.209-.118-3.207-.687-.881-.506-1.563-1.217-2.156-2.024-1.156-1.58-2.04-3.314-2.83-5.096-.178-.401-.048-.617.39-.624.727-.017 1.453-.016 2.18-.001.295.005.49.173.605.45.397.97.885 1.895 1.493 2.745.162.225.327.45.561.607.26.174.458.116.58-.17.077-.182.11-.377.127-.572.057-.665.064-1.332-.035-1.995-.061-.404-.291-.666-.694-.743-.207-.04-.176-.119-.076-.24.174-.214.338-.347.665-.347h2.018c.318.063.389.206.432.525l.002 2.244c-.004.124.062.492.285.575.179.06.297-.085.404-.2.484-.516.829-1.122 1.139-1.752.137-.278.255-.565.37-.852.085-.214.218-.32.458-.317l1.944.003c.057 0 .116.001.172.01.327.056.417.195.316.512-.16.5-.47.917-.774 1.336-.324.446-.67.876-.989 1.327-.29.41-.267.615.094.972z" fill="currentColor"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="currentColor"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="floating-button">
+        <button class="phone-button">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22 16.92V19.92C22 20.4704 21.7893 20.9987 21.4142 21.3738C21.0391 21.7489 20.5108 21.9596 19.96 21.96C16.4 22.28 12.94 21.34 9.94 19.24C7.14 17.29 4.79 14.94 2.84 12.14C0.74 9.13 -0.2 5.67 0.12 2.11C0.120484 1.55957 0.331123 1.03158 0.706218 0.656822C1.08131 0.282064 1.60901 0.0712112 2.16 0.0700001H5.16C6.17 0.0594893 7.05 0.780001 7.23 1.77C7.48 3.23 7.89 4.65 8.45 6C8.77 6.76 8.54 7.64 7.89 8.15L6.31 9.73C8.11 12.62 10.38 14.89 13.27 16.69L14.85 15.11C15.36 14.46 16.24 14.23 17 14.55C18.35 15.11 19.77 15.52 21.23 15.77C22.23 15.95 22.95 16.84 22 17.86V16.92Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 

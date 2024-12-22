@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.title }} - Arendom{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+{% endblock %}
+
+{% block content %}
+<main class="product-page">
+    <div class="container">
+        <div class="product-container">
+            <div class="product-gallery">
+                <div class="product-main-image">
+                    <img src="{{ product.image_url }}" alt="{{ product.title }}">
+                </div>
+            </div>
+            <div class="product-info">
+                <h1 class="product-title">{{ product.title }}</h1>
+                <p class="product-subtitle">{{ product.subtitle }}</p>
+                <div class="product-price">{{ product.price }} ₽</div>
+                <div class="product-description">
+                    <h3>Описание</h3>
+                    <p>{{ product.description }}</p>
+                </div>
+                <div class="product-category">
+                    <span>Категория:</span> {{ product.category }}
+                </div>
+                <div class="rent-period">
+                    <h3>Период аренды</h3>
+                    <input type="text" id="rentDates" placeholder="Выберите даты" class="rent-dates-input">
+                </div>
+                <button class="rent-button">Арендовать</button>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ru.js"></script>
+<script>
+    flatpickr("#rentDates", {
+        mode: "range",
+        locale: "ru",
+        minDate: "today",
+        dateFormat: "d.m.Y",
+        disableMobile: "true"
+    });
+</script>
+{% endblock %} 

@@ -1,0 +1,229 @@
+{% extends "base.html" %}
+
+{% block title %}Корзина - Arendom{% endblock %}
+
+{% block content %}
+<main class="cart-page">
+    <div class="container">
+        <h1 class="cart-title">Корзина</h1>
+        
+        {% if cart_items %}
+        <div class="cart-content">
+            <div class="cart-items">
+                {% for item in cart_items %}
+                <div class="cart-item">
+                    <div class="item-image">
+                        {% if item.image_id %}
+                        <img src="/listing/{{ item.listing.id }}/image/{{ item.image_id }}" alt="{{ item.listing.title }}">
+                        {% else %}
+                        <img src="/static/images/no-image.png" alt="Нет изображения">
+                        {% endif %}
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">{{ item.listing.title }}</h3>
+                        <p class="item-location">{{ item.listing.location }}</p>
+                        <p class="item-price">{{ item.listing.price }} ₽/день</p>
+                        <div class="item-quantity">
+                            <span>Количество: {{ item.item.quantity }}</span>
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <form action="/cart/remove/{{ item.item.id }}" method="POST">
+                            <button type="submit" class="remove-btn">Удалить</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="cart-summary">
+                <h2>Итого</h2>
+                <div class="summary-item">
+                    <span>Общая стоимость:</span>
+                    <span class="total-price">{{ total_price }} ₽/день</span>
+                </div>
+                <button class="checkout-btn">Оформить аренду</button>
+            </div>
+        </div>
+        {% else %}
+        <div class="empty-cart">
+            <p>Ваша корзина пуста</p>
+            <a href="/catalog" class="browse-btn">Перейти в каталог</a>
+        </div>
+        {% endif %}
+    </div>
+</main>
+
+<style>
+    .cart-page {
+        padding: 40px 0;
+        min-height: calc(100vh - 80px);
+    }
+
+    .cart-title {
+        font-size: 32px;
+        margin-bottom: 30px;
+        color: #fff;
+    }
+
+    .cart-content {
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        gap: 30px;
+    }
+
+    .cart-items {
+        background-color: #1a1f2c;
+        border-radius: 15px;
+        padding: 20px;
+    }
+
+    .cart-item {
+        display: grid;
+        grid-template-columns: 150px 1fr auto;
+        gap: 20px;
+        padding: 20px;
+        border-bottom: 1px solid #2a2f3c;
+    }
+
+    .cart-item:last-child {
+        border-bottom: none;
+    }
+
+    .item-image img {
+        width: 100%;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .item-info {
+        color: #fff;
+    }
+
+    .item-title {
+        font-size: 18px;
+        margin: 0 0 10px 0;
+    }
+
+    .item-location {
+        color: #8b8b8b;
+        margin-bottom: 10px;
+    }
+
+    .item-price {
+        color: #43cea2;
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .item-quantity {
+        color: #8b8b8b;
+    }
+
+    .item-actions {
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .remove-btn {
+        padding: 8px 16px;
+        background-color: #ff4757;
+        border: none;
+        border-radius: 8px;
+        color: #fff;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .remove-btn:hover {
+        background-color: #ff6b81;
+    }
+
+    .cart-summary {
+        background-color: #1a1f2c;
+        border-radius: 15px;
+        padding: 20px;
+        height: fit-content;
+        color: #fff;
+    }
+
+    .cart-summary h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .summary-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .total-price {
+        color: #43cea2;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .checkout-btn {
+        width: 100%;
+        padding: 15px;
+        background: linear-gradient(to right, #43cea2, #185a9d);
+        border: none;
+        border-radius: 10px;
+        color: #fff;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.3s;
+    }
+
+    .checkout-btn:hover {
+        transform: translateY(-2px);
+    }
+
+    .empty-cart {
+        text-align: center;
+        color: #fff;
+        padding: 40px;
+        background-color: #1a1f2c;
+        border-radius: 15px;
+    }
+
+    .empty-cart p {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .browse-btn {
+        display: inline-block;
+        padding: 15px 30px;
+        background: linear-gradient(to right, #43cea2, #185a9d);
+        border-radius: 10px;
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+        transition: transform 0.3s;
+    }
+
+    .browse-btn:hover {
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+        .cart-content {
+            grid-template-columns: 1fr;
+        }
+
+        .cart-item {
+            grid-template-columns: 100px 1fr;
+        }
+
+        .item-actions {
+            grid-column: 1 / -1;
+            justify-content: flex-end;
+        }
+    }
+</style>
+{% endblock %} 

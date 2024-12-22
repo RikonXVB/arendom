@@ -1,0 +1,356 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="listing-detail-container">
+    <div class="listing-card">
+        <div class="listing-info-container">
+            {% if images and images|length > 0 %}
+                <img src="/listing/{{ listing.id }}/image/{{ images[0].id }}" alt="{{ listing.title }}" class="listing-image">
+            {% else %}
+                <img src="/static/images/placeholder.jpg" alt="{{ listing.title }}" class="listing-image">
+            {% endif %}
+
+            <div class="listing-info">
+                <h1>{{ listing.title }}</h1>
+                <p class="location">{{ listing.location }}</p>
+                <p class="price">{{ listing.price }} ₽/день</p>
+                
+                <div class="description">
+                    <h2>Описание</h2>
+                    <p>{{ listing.description }}</p>
+                </div>
+
+                <div class="contacts">
+                    <h2>Контакты</h2>
+                    <p>{{ listing.contact }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="rental-period-container">
+            <h2>Период аренды</h2>
+            <div class="date-inputs">
+                <div class="date-group">
+                    <label>Дата начала</label>
+                    <input type="date" id="startDate" class="date-input">
+                </div>
+                <div class="date-group">
+                    <label>Дата окончания</label>
+                    <input type="date" id="endDate" class="date-input">
+                </div>
+            </div>
+            
+            <div class="rental-summary">
+                <div class="summary-item">
+                    <span>Количество дней:</span>
+                    <span id="daysCount">0</span>
+                </div>
+                <div class="summary-item">
+                    <span>Стоимость за период:</span>
+                    <span id="totalPrice">0 ₽</span>
+                </div>
+            </div>
+
+            <div class="product-actions">
+                <form action="/add-to-cart/{{ listing.id }}" method="post">
+                    <input type="hidden" name="start_date" id="cartStartDate">
+                    <input type="hidden" name="end_date" id="cartEndDate">
+                    <button type="submit" class="add-to-cart-btn">Добавить в корзину</button>
+                </form>
+                
+                <button class="add-to-favorite-btn favorite-toggle" data-listing-id="{{ listing.id }}">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20.84 4.61C20.3292 4.099 19.7228 3.69364 19.0554 3.41708C18.3879 3.14052 17.6725 2.99817 16.95 2.99817C16.2275 2.99817 15.5121 3.14052 14.8446 3.41708C14.1772 3.69364 13.5708 4.099 13.06 4.61L12 5.67L10.94 4.61C9.9083 3.57831 8.50903 2.99871 7.05 2.99871C5.59096 2.99871 4.19169 3.57831 3.16 4.61C2.1283 5.64169 1.54871 7.04097 1.54871 8.5C1.54871 9.95903 2.1283 11.3583 3.16 12.39L4.22 13.45L12 21.23L19.78 13.45L20.84 12.39C21.351 11.8792 21.7563 11.2728 22.0329 10.6054C22.3095 9.93789 22.4518 9.22249 22.4518 8.5C22.4518 7.77751 22.3095 7.06211 22.0329 6.39456C21.7563 5.72721 21.351 5.12078 20.84 4.61Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Добавить в избранное</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.listing-detail-container {
+    min-height: calc(100vh - 160px);
+    background: #1E2B37;
+    padding: 40px 20px;
+}
+
+.listing-card {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #2D3B48;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    gap: 30px;
+    padding: 30px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.listing-info-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.listing-image {
+    width: 100%;
+    max-width: 600px;
+    max-height: 400px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: #1E2B37;
+    margin: 0 auto;
+    display: block;
+}
+
+.rental-period-container {
+    flex: 0 0 300px;
+    background: #2D3B48;
+    border: 1px solid #3A4B59;
+    padding: 20px;
+    border-radius: 8px;
+    height: fit-content;
+}
+
+.date-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.date-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.date-group label {
+    color: #B8C4CF;
+    font-size: 14px;
+}
+
+.date-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #3A4B59;
+    border-radius: 5px;
+    background: #1E2B37;
+    color: white;
+    font-size: 14px;
+}
+
+.rental-summary {
+    margin-top: 20px;
+    padding: 15px;
+    background: #1E2B37;
+    border-radius: 5px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    color: #B8C4CF;
+}
+
+.summary-item:last-child {
+    margin-bottom: 0;
+    color: white;
+    font-weight: 500;
+}
+
+h1 {
+    color: white;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+h2 {
+    color: white;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.location {
+    color: #B8C4CF;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.price {
+    color: #4CC3C3;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.description, .contacts {
+    color: #B8C4CF;
+    line-height: 1.6;
+}
+
+/* Стили для кнопок */
+.product-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.add-to-cart-btn {
+    width: 100%;
+    padding: 12px;
+    background: #4CC3C3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-to-cart-btn:hover {
+    background: #3AA3A3;
+}
+
+.add-to-favorite-btn {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.add-to-favorite-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.add-to-favorite-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.add-to-favorite-btn.active {
+    background: rgba(220, 53, 69, 0.8);
+}
+
+.add-to-favorite-btn.active svg {
+    fill: white;
+}
+
+.add-to-favorite-btn.active:hover {
+    background: rgba(220, 53, 69, 0.9);
+}
+
+/* Медиа-запросы */
+@media (max-width: 968px) {
+    .listing-card {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .listing-image {
+        width: 100%;
+        max-height: 300px;
+    }
+
+    .rental-period-container {
+        width: 100%;
+    }
+
+    .add-to-cart-btn,
+    .add-to-favorite-btn {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .add-to-favorite-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+}
+</style>
+
+<script>
+function openModal(imgSrc) {
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+    modal.style.display = "flex";
+    modalImg.src = imgSrc;
+}
+
+function closeModal() {
+    document.getElementById('imageModal').style.display = "none";
+}
+
+// Закрытие модального окна при клике вне изображения
+window.onclick = function(event) {
+    const modal = document.getElementById('imageModal');
+    if (event.target == modal) {
+        closeModal();
+    }
+}
+
+// Закрытие по клавише Escape
+document.addEventListener('keydown', function(event) {
+    if (event.key === "Escape") {
+        closeModal();
+    }
+});
+
+// Добавляем обработчики для календаря
+document.addEventListener('DOMContentLoaded', function() {
+    const startDate = document.getElementById('startDate');
+    const endDate = document.getElementById('endDate');
+    const daysCount = document.getElementById('daysCount');
+    const totalPrice = document.getElementById('totalPrice');
+    const cartStartDate = document.getElementById('cartStartDate');
+    const cartEndDate = document.getElementById('cartEndDate');
+    
+    const pricePerDay = {{ listing.price }};
+    
+    // Устанавливаем минимальную дату как сегодня
+    const today = new Date().toISOString().split('T')[0];
+    startDate.min = today;
+    endDate.min = today;
+    
+    function updateSummary() {
+        if (startDate.value && endDate.value) {
+            const start = new Date(startDate.value);
+            const end = new Date(endDate.value);
+            const diffTime = Math.abs(end - start);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+            
+            if (diffDays > 0) {
+                daysCount.textContent = diffDays;
+                totalPrice.textContent = `${(diffDays * pricePerDay).toLocaleString()} ₽`;
+                
+                // Обновляем скрытые поля формы
+                cartStartDate.value = startDate.value;
+                cartEndDate.value = endDate.value;
+            }
+        }
+    }
+    
+    startDate.addEventListener('change', function() {
+        endDate.min = this.value;
+        updateSummary();
+    });
+    
+    endDate.addEventListener('change', updateSummary);
+});
+</script>
+{% endblock %} 
